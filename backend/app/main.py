@@ -29,7 +29,6 @@ def create_app() -> FastAPI:
         version=settings.project_version,
         lifespan=lifespan,
     )
-
     app.add_middleware(
         CORSMiddleware,
         allow_origins=settings.backend_cors_origins,

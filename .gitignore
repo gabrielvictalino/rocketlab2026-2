@@ -18,3 +18,19 @@ htmlcov/
 # Sistema operacional e IDE
 .DS_Store
 .vscode/
+
+# Frontend and generated reports
+node_modules/
+dist/
+storybook-static/
+*.tsbuildinfo
+coverage/
+playwright-report/
+test-results/
+*.log
+.env.local
+.env.*.local
+.storybook-cache/
+
+# The original Diamond files are supplied separately.
+data/diamond/

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="600" viewBox="0 0 400 600">
+<rect width="400" height="600" fill="#aab694"/>
+<circle cx="220" cy="212" r="102" fill="#eee2b1"/><path d="M-30 390Q130 195 470 345V650H-30" fill="#213f38"/><path d="M-20 450Q220 300 450 410V650H-20" fill="#aab694" opacity=".4"/>
+<rect x="18" y="18" width="364" height="564" rx="2" fill="none" stroke="#eee2b1" opacity=".4"/>
+<text x="200" y="50" text-anchor="middle" font-family="sans-serif" font-size="8" letter-spacing="4" fill="#eee2b1">UM FILME DE MARINA COSTA</text>
+<rect y="440" width="400" height="160" fill="#213f38" opacity=".92"/>
+<text x="200" y="493" text-anchor="middle" font-family="Georgia,serif" font-size="37" fill="#eee2b1">Além do</text>
+<text x="200" y="537" text-anchor="middle" font-family="Georgia,serif" font-size="37" fill="#eee2b1">horizonte</text>
+<text x="200" y="573" text-anchor="middle" font-family="sans-serif" font-size="8" letter-spacing="4" fill="#aab694">PLANO ORIGINAL · 2026 · DEMONSTRAÇÃO</text>
+</svg>

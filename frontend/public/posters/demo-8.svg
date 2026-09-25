@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="600" viewBox="0 0 400 600">
+<rect width="400" height="600" fill="#7798a2"/>
+<circle cx="210" cy="245" r="98" fill="#284754"/><circle cx="182" cy="215" r="71" fill="#e8d995"/><ellipse cx="210" cy="260" rx="178" ry="50" stroke="#e8d995" fill="none" stroke-width="3" transform="rotate(-32 210 260)"/>
+<rect x="18" y="18" width="364" height="564" rx="2" fill="none" stroke="#e8d995" opacity=".4"/>
+<text x="200" y="50" text-anchor="middle" font-family="sans-serif" font-size="8" letter-spacing="4" fill="#e8d995">UM FILME DE HELENA RAMOS</text>
+<rect y="440" width="400" height="160" fill="#284754" opacity=".92"/>
+<text x="200" y="493" text-anchor="middle" font-family="Georgia,serif" font-size="37" fill="#e8d995">Pequeno</text>
+<text x="200" y="537" text-anchor="middle" font-family="Georgia,serif" font-size="37" fill="#e8d995">infinito</text>
+<text x="200" y="573" text-anchor="middle" font-family="sans-serif" font-size="8" letter-spacing="4" fill="#7798a2">PLANO ORIGINAL · 2022 · DEMONSTRAÇÃO</text>
+</svg>

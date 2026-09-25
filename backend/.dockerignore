@@ -1,0 +1,12 @@
+**
+!pyproject.toml
+!app/
+!app/**
+!alembic.ini
+!migrations/
+!migrations/**
+!data/
+!data/*.csv
+**/__pycache__/
+**/*.pyc
+**/.env*

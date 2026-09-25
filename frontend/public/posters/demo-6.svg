@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="600" viewBox="0 0 400 600">
+<rect width="400" height="600" fill="#8d9997"/>
+<circle cx="260" cy="210" r="70" fill="#d6d4b2"/><path d="M-20 300 Q110 245 220 305 T440 300" stroke="#304443" stroke-width="25" fill="none" opacity="0.4"/><path d="M-20 343 Q110 288 220 348 T440 343" stroke="#304443" stroke-width="25" fill="none" opacity="0.5"/><path d="M-20 386 Q110 331 220 391 T440 386" stroke="#304443" stroke-width="25" fill="none" opacity="0.6000000000000001"/><path d="M-20 429 Q110 374 220 434 T440 429" stroke="#304443" stroke-width="25" fill="none" opacity="0.7000000000000001"/><path d="M-20 472 Q110 417 220 477 T440 472" stroke="#304443" stroke-width="25" fill="none" opacity="0.8"/>
+<rect x="18" y="18" width="364" height="564" rx="2" fill="none" stroke="#d6d4b2" opacity=".4"/>
+<text x="200" y="50" text-anchor="middle" font-family="sans-serif" font-size="8" letter-spacing="4" fill="#d6d4b2">UM FILME DE MARINA COSTA</text>
+<rect y="440" width="400" height="160" fill="#304443" opacity=".92"/>
+<text x="200" y="493" text-anchor="middle" font-family="Georgia,serif" font-size="37" fill="#d6d4b2">O que</text>
+<text x="200" y="537" text-anchor="middle" font-family="Georgia,serif" font-size="37" fill="#d6d4b2">fica</text>
+<text x="200" y="573" text-anchor="middle" font-family="sans-serif" font-size="8" letter-spacing="4" fill="#8d9997">PLANO ORIGINAL · 2025 · DEMONSTRAÇÃO</text>
+</svg>
