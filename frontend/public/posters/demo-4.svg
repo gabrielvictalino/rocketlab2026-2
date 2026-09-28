@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="600" viewBox="0 0 400 600">
+<rect width="400" height="600" fill="#34445d"/>
+<circle cx="210" cy="245" r="98" fill="#151c38"/><circle cx="182" cy="215" r="71" fill="#e49b6c"/><ellipse cx="210" cy="260" rx="178" ry="50" stroke="#e49b6c" fill="none" stroke-width="3" transform="rotate(-32 210 260)"/>
+<rect x="18" y="18" width="364" height="564" rx="2" fill="none" stroke="#e49b6c" opacity=".4"/>
+<text x="200" y="50" text-anchor="middle" font-family="sans-serif" font-size="8" letter-spacing="4" fill="#e49b6c">UM FILME DE RAFAEL LUZ</text>
+<rect y="440" width="400" height="160" fill="#151c38" opacity=".92"/>
+<text x="200" y="493" text-anchor="middle" font-family="Georgia,serif" font-size="37" fill="#e49b6c">Órbita</text>
+<text x="200" y="537" text-anchor="middle" font-family="Georgia,serif" font-size="37" fill="#e49b6c">silenciosa</text>
+<text x="200" y="573" text-anchor="middle" font-family="sans-serif" font-size="8" letter-spacing="4" fill="#34445d">PLANO ORIGINAL · 2026 · DEMONSTRAÇÃO</text>
+</svg>

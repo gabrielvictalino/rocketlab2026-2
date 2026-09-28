@@ -1,5 +1,6 @@
 from functools import lru_cache
 
+from pydantic import Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -15,6 +16,10 @@ class Settings(BaseSettings):
     database_url: str = "sqlite+aiosqlite:///./rocketlab.db"
     backend_cors_origins: list[str] = ["http://localhost:5173"]
     log_level: str = "INFO"
+    admin_username: str = "admin"
+    admin_password_hash: SecretStr = SecretStr("")
+    auth_secret: SecretStr = SecretStr("")
+    auth_token_ttl_seconds: int = Field(default=3600, ge=60, le=86400)
 
 
 @lru_cache

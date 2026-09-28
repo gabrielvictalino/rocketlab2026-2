@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="600" viewBox="0 0 400 600">
+<rect width="400" height="600" fill="#c9a38d"/>
+<path d="M65 580V200a135 135 0 0 1 270 0v380" fill="#60412f"/><path d="M115 580V220a85 85 0 0 1 170 0v360" fill="#eed7b5" opacity=".65"/><path d="M140 610 200 300 260 610" fill="#60412f"/>
+<rect x="18" y="18" width="364" height="564" rx="2" fill="none" stroke="#eed7b5" opacity=".4"/>
+<text x="200" y="50" text-anchor="middle" font-family="sans-serif" font-size="8" letter-spacing="4" fill="#eed7b5">UM FILME DE HELENA RAMOS</text>
+<rect y="440" width="400" height="160" fill="#60412f" opacity=".92"/>
+<text x="200" y="493" text-anchor="middle" font-family="Georgia,serif" font-size="37" fill="#eed7b5">A última</text>
+<text x="200" y="537" text-anchor="middle" font-family="Georgia,serif" font-size="37" fill="#eed7b5">estação</text>
+<text x="200" y="573" text-anchor="middle" font-family="sans-serif" font-size="8" letter-spacing="4" fill="#c9a38d">PLANO ORIGINAL · 2024 · DEMONSTRAÇÃO</text>
+</svg>
