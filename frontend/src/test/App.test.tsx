@@ -1,4 +1,4 @@
-import { render, screen, waitFor, fireEvent } from '@testing-library/react'
+import { act, render, screen, waitFor, fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MemoryRouter } from 'react-router-dom'
@@ -24,7 +24,7 @@ vi.mock('../api', () => ({
 }))
 
 beforeEach(() => {
-  vi.clearAllMocks()
+  vi.resetAllMocks()
   localStorage.clear()
   vi.mocked(api.movies).mockResolvedValue({
     items: [movie],
@@ -140,4 +140,131 @@ it('confirma a exclusão antes de remover o filme', async () => {
   await userEvent.click(screen.getByRole('button', { name: /^remover$/i }))
   await userEvent.click(screen.getByRole('button', { name: 'Remover filme' }))
   await waitFor(() => expect(api.remove).toHaveBeenCalledWith(movie.sk_movie_id))
+})
+
+it.each(['criação', 'edição'])('salva %s, atualiza o cache e abre a ficha', async (mode) => {
+  const editing = mode === 'edição'
+  let finish!: (value: typeof movie) => void
+  const pending = new Promise<typeof movie>((resolve) => {
+    finish = resolve
+  })
+  vi.mocked(api.create).mockReturnValue(pending)
+  vi.mocked(api.update).mockReturnValue(pending)
+  const client = app(editing ? `/filmes/${movie.sk_movie_id}/editar` : '/filmes/novo')
+  const invalidate = vi.spyOn(client, 'invalidateQueries')
+  await login()
+  const title = await screen.findByLabelText('Título *')
+  expect(title).toHaveValue(editing ? movie.titulo : '')
+  fireEvent.change(title, { target: { value: ' Novo título ' } })
+  fireEvent.change(screen.getByLabelText('Direção *'), { target: { value: ' Ana, Ana, Bia ' } })
+  fireEvent.change(screen.getByLabelText('Gêneros *'), { target: { value: 'Drama, Drama' } })
+  fireEvent.change(screen.getByLabelText('Ano de lançamento *'), { target: { value: '2026' } })
+  await userEvent.click(
+    screen.getByRole('button', { name: editing ? /salvar alterações/i : /cadastrar filme/i }),
+  )
+  const payload = expect.objectContaining({
+    titulo: 'Novo título',
+    diretores: ['Ana', 'Bia'],
+    generos: ['Drama'],
+    ano_lancamento: 2026,
+  })
+  if (editing) expect(api.update).toHaveBeenCalledWith(movie.sk_movie_id, payload)
+  else expect(api.create).toHaveBeenCalledWith(payload)
+  expect(screen.getByRole('button', { name: /salvando/i })).toBeDisabled()
+  expect(title).toBeDisabled()
+  await act(async () => finish(movie))
+  expect(await screen.findByRole('heading', { name: movie.titulo })).toBeVisible()
+  expect(invalidate).toHaveBeenCalledWith({ queryKey: ['movies'] })
+})
+
+it('retorna ao editor após a sessão expirar e um novo login', async () => {
+  app(`/filmes/${movie.sk_movie_id}/editar`)
+  await login()
+  await screen.findByLabelText('Título *')
+  act(() => window.dispatchEvent(new Event('auth-expired')))
+  expect(await screen.findByLabelText('Usuário')).toBeVisible()
+  expect(setToken).toHaveBeenLastCalledWith(null)
+  expect(screen.queryByLabelText('Título *')).not.toBeInTheDocument()
+  await login()
+  expect(await screen.findByLabelText('Título *')).toHaveValue(movie.titulo)
+})
+
+it('mantém a confirmação bloqueada enquanto a exclusão está em andamento', async () => {
+  let finish!: () => void
+  vi.mocked(api.remove).mockReturnValue(
+    new Promise<void>((resolve) => {
+      finish = resolve
+    }),
+  )
+  const client = app(`/filmes/${movie.sk_movie_id}`)
+  const invalidate = vi.spyOn(client, 'invalidateQueries')
+  await userEvent.click(await screen.findByRole('link', { name: /entrar para avaliar/i }))
+  await login()
+  await userEvent.click(await screen.findByRole('button', { name: /^remover$/i }))
+  await userEvent.click(screen.getByRole('button', { name: 'Remover filme' }))
+  expect(screen.getByRole('button', { name: 'Cancelar' })).toBeDisabled()
+  expect(screen.getByRole('button', { name: /removendo/i })).toBeDisabled()
+  fireEvent(screen.getByRole('dialog'), new Event('cancel', { cancelable: true }))
+  expect(screen.getByRole('dialog')).toBeVisible()
+  await act(async () => finish())
+  expect(await screen.findByRole('heading', { name: /explore o catálogo/i })).toBeVisible()
+  expect(invalidate).toHaveBeenCalledWith({ queryKey: ['movies'] })
+})
+
+it('mostra carregamento e depois o catálogo vazio', async () => {
+  let finish!: (value: Awaited<ReturnType<typeof api.movies>>) => void
+  vi.mocked(api.movies).mockReturnValue(
+    new Promise((resolve) => {
+      finish = resolve
+    }),
+  )
+  app()
+  expect(screen.getByText('Carregando cinema…')).toBeVisible()
+  await act(async () => finish({ items: [], total: 0, page: 1, page_size: 12, pages: 0 }))
+  expect(await screen.findByRole('heading', { name: /nenhum filme/i })).toBeVisible()
+})
+
+it.each([
+  ['/', 'movies', 'Não foi possível carregar os filmes.'],
+  [`/filmes/${movie.sk_movie_id}`, 'movie', 'Não foi possível carregar o filme.'],
+  [`/filmes/${movie.sk_movie_id}`, 'reviews', 'Não foi possível carregar as avaliações.'],
+] as const)('exibe falha de consulta em %s (%s)', async (path, endpoint, message) => {
+  vi.mocked(api[endpoint]).mockRejectedValue(new Error('Falha de consulta'))
+  app(path)
+  expect(await screen.findByText(message)).toBeVisible()
+})
+
+it('pagina avaliações e apresenta notas zero e decimais', async () => {
+  vi.mocked(api.reviews)
+    .mockResolvedValueOnce({
+      items: [{ ...review, nota: 0 }],
+      total: 11,
+      page: 1,
+      page_size: 10,
+      pages: 2,
+    })
+    .mockResolvedValue({
+      items: [{ ...review, nota: 7.5, comentario: 'Outra perspectiva' }],
+      total: 11,
+      page: 2,
+      page_size: 10,
+      pages: 2,
+    })
+  app(`/filmes/${movie.sk_movie_id}`)
+  expect(await screen.findByText('0.0')).toBeVisible()
+  await userEvent.click(screen.getByRole('button', { name: /próxima/i }))
+  expect(await screen.findByText('7.5')).toBeVisible()
+  expect(api.reviews).toHaveBeenLastCalledWith(movie.sk_movie_id, 2, expect.any(AbortSignal))
+})
+
+it('mostra o convite à primeira avaliação quando não há resenhas', async () => {
+  vi.mocked(api.reviews).mockResolvedValue({
+    items: [],
+    total: 0,
+    page: 1,
+    page_size: 10,
+    pages: 0,
+  })
+  app(`/filmes/${movie.sk_movie_id}`)
+  expect(await screen.findByText('Este filme ainda não recebeu avaliações.')).toBeVisible()
 })

@@ -10,6 +10,7 @@ htmlcov/
 
 # Ambiente e banco local
 .env
+.env.example
 *.db
 *.db-shm
 *.db-wal
@@ -19,7 +20,7 @@ htmlcov/
 .DS_Store
 .vscode/
 
-# Frontend and generated reports
+# Frontend 
 node_modules/
 dist/
 storybook-static/
@@ -32,5 +33,5 @@ test-results/
 .env.*.local
 .storybook-cache/
 
-# The original Diamond files are supplied separately.
-data/diamond/
+# Dados
+backend/data/
